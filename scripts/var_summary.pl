@@ -74,7 +74,7 @@ open(GROUP,"$group_file") || modules::Exception->throw("Can't open file $group_f
 while (<GROUP>) {
 	chomp;
 	my @fields = split();
-	my ($barcode) = $fields[1] =~ /([ACGT]+)/;
+	my ($barcode) = $fields[1] =~ /([ACGT\+]+)/;
 	$group_counts{$barcode} = $fields[0]; 
 #	print STDOUT "Line:$_\tField0:".$fields[0]."\tField1:".$fields[1]."\tBarcode:$barcode\n";
 #	die "Argh\n";
@@ -152,6 +152,7 @@ for my $file (sort {my ($a_chr,$a_coord) = $a =~ /(\S+)_(\d+)/;my ($b_chr,$b_coo
 						} 
 						
 						my $percent = sprintf("%.2f",($var_count / $group_count) * 100) if $group_count;
+						#my $group_count_barcode_count=sprintf("%.0f",($group_count/225)) ;
 						print SUMMARY "$chr $start $end $base $barcode $var_count $group_count $percent%\n";
 					}
 				}

@@ -122,7 +122,7 @@ while (!eof(READ1) && !eof(READ2)) {
 	my $line2 = <READ2>;
 	chomp $line1;
 	chomp $line2;
-	
+	#print "line1:$line1\nline2:$line2\n";
 	if ($count%4 == 0) { #tag line
 	     # save sequence tag and ignore anything else 
 		($tag1) = $line1 =~ /(\S+)/;
@@ -176,20 +176,20 @@ while (!eof(READ1) && !eof(READ2)) {
 			my $bar1_part1 = my $seq1 = my $bar1_part2 = my $bar2_part1 = my $seq2 = my $bar2_part2;
 			if ($cut_length) {
 				#Here we remove extra seuqence from each end of the split barcode
-				($bar1_part1,$bar1_part2) = $line1 =~ /^(\S{$uid_len1})\S+(\S{$uid_len2})/;
-				($bar2_part1,$bar2_part2) = $sequence_line2 =~ /^(\S{$uid_len1})\S+(\S{$uid_len2})/;
-				($seq1) = $line1 =~ /^\S{$cut_length}(\S+)\S{$cut_length}/;
-				($seq2) = $sequence_line2 =~ /^\S{$cut_length}(\S+)\S{$cut_length}/;
+				($bar1_part1) = $line1 =~ /^(\S{$uid_len1})\S+/;
+				($bar2_part1) = $sequence_line2 =~ /^(\S{$uid_len2})\S+/;
+				($seq1) = $line1 =~ /^\S{$cut_length}(\S+)/;
+				($seq2) = $sequence_line2 =~ /^\S{$cut_length}(\S+)/;
 			} else {
-				($bar1_part1,$seq1,$bar1_part2) = $line1 =~ /^(\S{$uid_len1})(\S+)(\S{$uid_len2})/;
-				($bar2_part1,$seq2,$bar2_part2) = $sequence_line2 =~ /^(\S{$uid_len1})(\S+)(\S{$uid_len2})/;
+				($bar1_part1,$seq1) = $line1 =~ /^(\S{$uid_len1})(\S+)/;
+				($bar2_part1,$seq2) = $sequence_line2 =~ /^(\S{$uid_len2})(\S+)/;
 			}
 			
 			if ($OPT{combine_reads}) {
-				$barcode1 = $barcode2 = $bar1_part1.$bar1_part2.$bar2_part1.$bar2_part2;
+				$barcode1 = $barcode2 = $bar1_part1."+".$bar2_part1;
 			} else {
-				$barcode1 = $bar1_part1.$bar1_part2;
-				$barcode2 = $bar2_part1.$bar2_part2;
+				$barcode1 = $bar1_part1;
+				$barcode2 = $bar2_part1;
 			}
 			
 			
@@ -215,16 +215,16 @@ while (!eof(READ1) && !eof(READ2)) {
          	} elsif ($cut_length) {
 				#Here we want to keep some the UID
 				($bar1) = $line1 =~ /^(\S{$uid_len1})/;
-				($bar2) = $sequence_line2 =~ /^(\S{$uid_len1})/;
+				($bar2) = $sequence_line2 =~ /^(\S{$uid_len2})/;
 				($seq1) = $line1 =~ /^\S{$cut_length}(\S+)/;
 				($seq2) = $sequence_line2 =~ /^\S{$cut_length}(\S+)/;
 			} else {
 				($bar1,$seq1) = $line1 =~ /^(\S{$uid_len1})(\S+)/;
-				($bar2,$seq2) = $sequence_line2 =~ /^(\S{$uid_len1})(\S+)/;
+				($bar2,$seq2) = $sequence_line2 =~ /^(\S{$uid_len2})(\S+)/;
 			}
 			
 			if ($OPT{combine_reads}) {
-				$barcode1 = $barcode2 = $bar1.$bar2;
+				$barcode1 = $barcode2 = $bar1."+".$bar2;
 			} else {
 				$barcode1 = $bar1;
 				$barcode2 = $bar2;
@@ -243,8 +243,6 @@ while (!eof(READ1) && !eof(READ2)) {
 			} 
 		}
 
-		
-	
 
 	    # On with counting a match, presuming there was one
 
@@ -288,8 +286,8 @@ while (!eof(READ1) && !eof(READ2)) {
 				$readqual2 = $line2;
 			} elsif ($cut_length) {
 				if ($split_barcode) {
-					($readqual1) = $line1 =~ /^\S{$cut_length}(\S+)\S{$cut_length}/;
-					($readqual2) = $error_line2 =~ /^\S{$cut_length}(\S+)\S{$cut_length}/;
+					($readqual1) = $line1 =~ /^\S{$cut_length}(\S+)/;
+					($readqual2) = $error_line2 =~ /^\S{$cut_length}(\S+)/;
 				} else {
 					($readqual1) = $line1 =~ /^\S{$cut_length}(\S+)/;
 					($readqual2) = $error_line2 =~ /^\S{$cut_length}(\S+)/;
@@ -301,7 +299,7 @@ while (!eof(READ1) && !eof(READ2)) {
 			}
 			print FILTERREAD1 "$readqual1\n";
 			print FILTERREAD2 "$readqual2\n";
-			
+		
 		}
 	}
 	

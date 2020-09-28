@@ -1,1 +1,24 @@
 Working directory for test_deepseq.pl
+
+
+bwa=/share/public/software/bwa-0.7.5a/bwa
+samtools=/share/public/software/Onc_Soft/samtools-1.4/samtools
+ref_fasta=/share/work2/fuzhl4317/github/DeepSNVMiner/sample/ref.fa
+bwa_index=/share/work2/fuzhl4317/github/DeepSNVMiner/sample/ref.fa
+
+实例
+/share/work2/fuzhl4317/project/DeepSNVMiner_test/sample/silico_116452
+cat /share/work2/fuzhl4317/project/DeepSNVMiner_test/sample/run_all.sh
+perl /share/work2/fuzhl4317/github/DeepSNVMiner/run_deepseq.pl  -filename_stub silico -read1_fastq //share/work2/fuzhl4317/project/DeepSNVMiner_test/sample/T_down_umi_L1.R1.fastq -read2_fastq //share/work2/fuzhl4317/project/DeepSNVMiner_test/sample/T_down_umi_L1.R2.fastq -uid_len1 8 -uid_len2 8 -cut_length 9 -combine_reads  -bwa /share/public/software/bwa-0.7.5a/bwa -samtools /share/public/software/Onc_Soft/samtools-1.4/samtools -ref_fasta /share/public/software/Onc_Soft/database/hg19/hg19.rm_CRLF2_P2RY8.fasta -coord_bed /share/work2/fuzhl4317/project/DeepSNVMiner_test/sample/ref.bed -no_revcom
+
+
+
+      1 37      chr10   43606687        43606687        G       TGATTGTT+GTTCCGGC(26/240); AATATTGG+GTCCAACT(25/234); TGAAGGAA+GTTGTTGG(25/237); AATATTGG+GTTGTTGG(24/239); GTTCCG
+      2 1       chr17   7579358 7579358 A       CGGTCCTT+AACACAGA(25/240)
+      3 1       chr17   7579472 7579472 C       TGAAGGAA+TGAAGGAA(24/239)
+      4 21      chr17   37866005        37866005        T       AGGTGCTA+GTTGTTGG(25/239); TGATTGTT+ACCGGACC(28/240); GTTCCGGC+CCTTCCAA(24/237); ACCGGACC+CTTGGTCG(25/239); ACCGGA
+      5 181     chr22   42523943        42523943        G       ACCGGACC+GTTGTTGG(31/238); AACACAGA+AACACAGA(28/236); AATATTGG+CCACACTC(33/240); CCACACTC+AGGTGCTA(26/237); ACCGGA
+      6 69      chr22   42525756        42525756        A       TCCAATCA+CCACACTC(27/237); CGGTCCTT+CGGTCCTT(27/236); TGATTGTT+AATATTGG(35/238); GTTCCGGC+TCCAATCA(27/239); CTTGGT
+      7 156     chr22   42526694        42526694        A       CCACACTC+TCCAATCA(25/237); CCACACTC+GTTCCGGC(29/238); GTCCAACT+AATATTGG(34/239); ACCGGACC+CCACACTC(42/237); GAGGTA
+      8 15      chr6    117654711       117654711       C       CCACACTC+TCCAATCA(25/237); CCTTCCAA+TGAAGGAA(24/239); GAGGTAAG+AGGTGCTA(24/237); AACACAGA+AATATTGG(25/237); CGGTCC
+      9 2       chr7    140487878       140487878       T       GTTCCGGC+GAGGTAAG(24/238); AATATTGG+GAGGTAAG(24/237)

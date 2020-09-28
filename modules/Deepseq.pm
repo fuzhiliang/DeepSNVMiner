@@ -81,7 +81,7 @@ my %COMMANDS = (1 =>
 				  	 {
 				  	 	'block' => 'report',
 				  	 	'commands' => [
-				  	 					q(grep UID= FASTQFILE1.filter FASTQFILE2.filter | sed -e 's/.*UID=//' | sort | uniq -c |  perl -ne 's/^\s+//; s/[\t\s]+/ /g; print $_ . "\n"' > FILENAMESTUB_R1.group_counts_final),# Generate stats - number of reads in groups
+				  	 					q(grep UID= FASTQFILE1.filter | sed -e 's/.*UID=//' | sort | uniq -c |  perl -ne 's/^\s+//; s/[\t\s]+/ /g; print $_ . "\n"' > FILENAMESTUB_R1.group_counts_final),# Generate stats - number of reads in groups
 				  	 					q(VARSUMMARY -var_dir vars_FILENAMESTUB -group_file FILENAMESTUB_R1.group_counts_final),# Group by barcode for each coordinate
 										q(cut -d' ' -f1 FILENAMESTUB_R1.group_counts_final |sort | uniq -c | perl -e 'while(<>){chomp; /(\d+)\s+(\d+)/; $tally += $1;} print $tally . "\n";'),#Total reads in groups
 										q(grep -w ^1 FILENAMESTUB_R1.group_counts_final |wc -l),#Total reads in singleton groups
